@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>Excel to JSON Demo</title>
+<script>
+function GetData(){
+	var con =new ActiveXObject('ADODB.Connection');
+	var rs=new ActiveXObject('ADOB.Recordset');
+	con.ConnectionString = "Provider = MADSDAORA.1;userid=root;password=root;datasource=ORA";
+	con.open();
+	rs.open(document.getElementById('textsql').value,con);
+	var s = "<table border=2><tr>";
+	for(var i=0;rs.Fields.length();i++)
+		s+="<td>"+rs.Fields(i).Name + "</td>";
+	s+="</tr><tr>"
+	while(!rs.EOF){
+		for(var i=0;rs.Fields.length();i++)
+				s+="<td>"+ rs.Fields.value+"</td>";
+		rs.Move.Net();
+	
+	}
+	rs.close();
+	con.close();
+	document.getElementById("divsql").innerHtml = s;	
+}
+</script>
+</head>
+<body>
+<div id="abc">
+	<TextArea id = "textsql" value=""></TextArea>
+	<input type ="button" value="query" onclick="GetData()"/>	
+</div>
+<div id="divsql">
+</div>
+</body>
+</html>
